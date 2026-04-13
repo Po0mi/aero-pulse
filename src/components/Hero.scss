@@ -1,0 +1,107 @@
+/* Hero.scss */
+
+.hero {
+  min-height: 100svh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg-color);
+
+  .hero-container {
+    height: 100svh;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0;
+    justify-items: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+
+    .hero-title {
+      grid-area: 3/2/4/7;
+      font-size: clamp(3rem, 20vw, 14rem);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      color: rgba(244, 243, 238, 0.8);
+      z-index: 0;
+      font-family: var(--font-display);
+    }
+
+    .hero-subtitle {
+      grid-area: 3/1/4/4;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 100;
+      text-align: center;
+      align-self: flex-end;
+      letter-spacing: -0.5px;
+      color: rgba(244, 243, 238, 0.8);
+      z-index: 0;
+      font-family: var(--font-body);
+      padding-right: 2.5rem;
+    }
+    .hero-image-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      pointer-events: none;
+
+      .hero-image {
+        width: clamp(400px, 50vw, 1200px);
+        height: auto;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+
+    .hero-scroll-track {
+      width: 1.5px;
+      height: 60px;
+      background: rgba(244, 243, 238, 0.15);
+      position: relative;
+      overflow: hidden;
+
+      .hero-scroll-dot {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        background: linear-gradient(to bottom, transparent, var(--main-text));
+        animation: scrollDrop 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    }
+
+    .hero-scroll-label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: rgba(244, 243, 238, 0.4);
+    }
+  }
+
+  @keyframes scrollDrop {
+    0% {
+      top: -40%;
+    }
+    100% {
+      top: 100%;
+    }
+  }
+}
