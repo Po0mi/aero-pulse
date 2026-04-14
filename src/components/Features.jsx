@@ -36,61 +36,122 @@ const FEATURES = [
     body: "Bluetooth 5.3 ensures fast pairing and stable connections across all your devices.",
     tag: "BT 5.3",
   },
+  {
+    index: "06",
+    title: "Advanced Touch Controls",
+    body: "Intuitive gesture-based controls for playback, volume, and calls. Customize your experience with programmable touch zones.",
+    tag: "TOUCH GESTURES",
+  },
+  {
+    index: "07",
+    title: "Premium Build Quality",
+    body: "Aircraft-grade aluminum construction with diamond-cut finish. Engineered to withstand daily use while maintaining premium aesthetics.",
+    tag: "AIRCRAFT ALUMINUM",
+  },
+  {
+    index: "08",
+    title: "Spatial Audio Technology",
+    body: "Immersive 3D sound experience with dynamic head tracking. Feel every dimension of your music come alive around you.",
+    tag: "3D SPATIAL AUDIO",
+  },
 ];
 
 const Features = () => {
-  const stackRef = useRef(null);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: stackRef.current,
-          pin: true,
-          start: "top top",
-          end: `+=${FEATURES.length * 300}`,
-          scrub: 1,
-        },
-      });
-
-      tl.to(".features-card-body", {
-        height: 0,
-        paddingBottom: 0,
-        opacity: 0,
-        stagger: 0.5,
-      });
-
-      tl.to(
-        ".features-card",
+      // Animate the timeline line drawing in
+      gsap.fromTo(
+        ".tl-line-fill",
+        { scaleY: 0 },
         {
-          marginBottom: -15,
-          stagger: 0.5,
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".features-timeline",
+            start: "top 60%",
+            end: "bottom 80%",
+            scrub: 1,
+          },
         },
-        "<",
       );
-    }, stackRef);
+
+      // Animate each timeline item
+      gsap.utils.toArray(".tl-item").forEach((item, i) => {
+        const isLeft = i % 2 === 0;
+        const content = item.querySelector(".tl-content");
+        const node = item.querySelector(".tl-node");
+
+        gsap.fromTo(
+          content,
+          { opacity: 0, x: isLeft ? -60 : 60 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+
+        gsap.fromTo(
+          node,
+          { scale: 0, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.5,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      });
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="features" className="features">
+    <section id="features" className="features" ref={sectionRef}>
       <div className="features-header">
-        <h2 className="features-title">Built different.</h2>
+        <h2 className="features-title"></h2>
       </div>
 
-      <div className="features-stack" ref={stackRef}>
+      <div className="features-timeline">
+        {/* The vertical line */}
+        <div className="tl-track">
+          <div className="tl-line-fill" />
+        </div>
+
         {FEATURES.map((feature, i) => (
           <div
             key={feature.index}
-            className="features-card"
-            style={{ "--card-index": i }}
+            className={`tl-item ${i % 2 === 0 ? "tl-item--left" : "tl-item--right"}`}
           >
-            <div className="features-card-inner">
-              <span className="features-card-tag">{feature.tag}</span>
-              <h3 className="features-card-title">{feature.title}</h3>
-              <p className="features-card-body">{feature.body}</p>
+            {/* Content panel */}
+            <div className="tl-content">
+              <span className="tl-tag">{feature.tag}</span>
+              <h3 className="tl-title">{feature.title}</h3>
+              <p className="tl-body">{feature.body}</p>
             </div>
+
+            {/* Center node */}
+            <div className="tl-node">
+              <span className="tl-index">{feature.index}</span>
+              <div className="tl-node-ring" />
+            </div>
+
+            {/* Empty spacer on opposite side */}
+            <div className="tl-spacer" />
           </div>
         ))}
       </div>

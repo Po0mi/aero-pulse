@@ -87,15 +87,15 @@
     &::before {
       top: -4px;
       left: -4px;
-      border-top: 1.5px solid var(--main-text);
-      border-left: 1.5px solid var(--main-text);
+      border-top: 1.5px solid var(--accent-color);
+      border-left: 1.5px solid var(--accent-color);
     }
 
     &::after {
       bottom: -4px;
       right: -4px;
-      border-bottom: 1.5px solid var(--main-text);
-      border-right: 1.5px solid var(--main-text);
+      border-bottom: 1.5px solid var(--accent-color);
+      border-right: 1.5px solid var(--accent-color);
     }
 
     &:hover::before,
