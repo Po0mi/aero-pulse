@@ -122,9 +122,7 @@ const Features = () => {
 
   return (
     <section id="features" className="features" ref={sectionRef}>
-      <div className="features-header">
-        <h2 className="features-title"></h2>
-      </div>
+      <div className="feature-padding"></div>
 
       <div className="features-timeline">
         {/* The vertical line */}

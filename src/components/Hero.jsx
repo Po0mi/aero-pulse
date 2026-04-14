@@ -5,7 +5,6 @@ import heroHeadphones from "../assets/hero-headphones.png";
 const Hero = () => {
   return (
     <section id="hero" className="hero">
-      <div className="hero-wrapper"></div>
       <div className="hero-container">
         <div className="hero-meta">
           <span className="hero-meta-label">[ Signal status ]</span>

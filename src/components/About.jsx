@@ -7,6 +7,9 @@ const About = () => {
       <div className="about-container">
         <h1 className="about-heading">THE MACHINE IS</h1>
         <h1 className="about-second-heading">BUILT DIFFERENT</h1>
+        <p className="about-meta">
+          [ A revolutionary approach to audio technology ]
+        </p>
         <div className="about-image-wrapper">
           <img
             src={SideHeadphones}
