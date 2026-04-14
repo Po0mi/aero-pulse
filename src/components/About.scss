@@ -122,4 +122,117 @@
   .price-tag:hover .price-arrow {
     transform: translateX(0.3rem);
   }
+
+  @media (max-width: 768px) {
+    .about-container {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      height: auto;
+      min-height: 100svh;
+      padding: 2rem;
+    }
+
+    .about-heading {
+      grid-area: 1/1/2/5;
+      font-size: clamp(1.8rem, 10vw, 4rem);
+      padding-left: 1rem;
+    }
+
+    .about-second-heading {
+      grid-area: 3/1/4/5;
+      font-size: clamp(1.8rem, 10vw, 4rem);
+      text-align: left;
+      padding-left: 1rem;
+      padding-right: 0;
+    }
+
+    .about-image-wrapper {
+      top: auto;
+      left: auto;
+      transform: none;
+      position: relative;
+      margin: 2rem 0;
+    }
+
+    .about-image {
+      width: clamp(300px, 80vw, 600px);
+    }
+
+    .about-body {
+      grid-area: 4/1/5/5;
+      font-size: clamp(0.9rem, 2vw, 1rem);
+      text-align: left;
+    }
+
+    .about-meta {
+      grid-area: 5/1/6/5;
+      text-align: left;
+      padding-right: 0;
+      font-size: clamp(0.75rem, 1vw, 0.9rem);
+    }
+
+    .price-tag {
+      grid-area: 6/1/7/5;
+      align-items: flex-start;
+      padding-right: 0;
+    }
+
+    .price-value {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      height: auto;
+      min-height: unset;
+      padding: 1rem;
+    }
+
+    .about-heading {
+      grid-area: unset;
+      font-size: clamp(1.3rem, 8vw, 2rem);
+      padding-left: 0;
+      margin-bottom: 1rem;
+    }
+
+    .about-second-heading {
+      grid-area: unset;
+      font-size: clamp(1.3rem, 8vw, 2rem);
+      padding-left: 0;
+      padding-right: 0;
+      margin-bottom: 1rem;
+    }
+
+    .about-image-wrapper {
+      margin: 1rem 0;
+    }
+
+    .about-image {
+      width: clamp(150px, 90vw, 400px);
+    }
+
+    .about-body {
+      grid-area: unset;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
+      margin-bottom: 1rem;
+    }
+
+    .about-meta {
+      grid-area: unset;
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
+      margin-bottom: 1rem;
+    }
+
+    .price-tag {
+      grid-area: unset;
+      align-items: flex-start;
+      padding: 1rem 0;
+    }
+
+    .price-value {
+      font-size: clamp(1.2rem, 3vw, 1.5rem);
+    }
+  }
 }
