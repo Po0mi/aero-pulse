@@ -2,9 +2,9 @@ import { useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./ProductShowcase.scss";
-import imgPro from "../assets/AeroPulse Pro.png";
-import imgAir from "../assets/AeroPulse Air.png";
-import imgStudio from "../assets/AeroPulse Studio.png";
+import imgPro from "../assets/AeroPulse Pro.webp";
+import imgAir from "../assets/AeroPulse Air.webp";
+import imgStudio from "../assets/AeroPulse Studio.webp";
 import useProductShowcaseAnimation from "../hooks/useProductShowcaseAnimation";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -84,10 +84,10 @@ const ProductShowcase = () => {
       }).to(
         infoRef.current,
         { opacity: 0, y: 20, duration: 0.35, ease: "power2.in" },
-        "<"
+        "<",
       );
     },
-    [active, animating]
+    [active, animating],
   );
 
   const prev = () => goTo((active - 1 + PRODUCTS.length) % PRODUCTS.length);

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import "./Hero.scss";
-import heroHeadphones from "../assets/hero-headphones.png";
+import heroHeadphones from "../assets/hero-headphones.webp";
 import useHeroAnimation from "../hooks/useHeroAnimation";
 
 const Hero = () => {
@@ -11,7 +11,14 @@ const Hero = () => {
   const imageRef = useRef(null);
   const bottomMetaRef = useRef(null);
 
-  useHeroAnimation({ metaRef, titleRef, subtitleRef, bodyRef, imageRef, bottomMetaRef });
+  useHeroAnimation({
+    metaRef,
+    titleRef,
+    subtitleRef,
+    bodyRef,
+    imageRef,
+    bottomMetaRef,
+  });
 
   return (
     <section id="hero" className="hero">

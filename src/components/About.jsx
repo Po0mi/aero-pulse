@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import "./About.scss";
-import SideHeadphones from "../assets/side-headphones.png";
+import SideHeadphones from "../assets/side-headphones.webp";
 import useAboutAnimation from "../hooks/useAboutAnimation";
 
 const About = () => {
@@ -25,8 +25,12 @@ const About = () => {
   return (
     <section id="about" className="about" ref={sectionRef}>
       <div className="about-container">
-        <h1 className="about-heading" ref={headingRef}>THE MACHINE IS</h1>
-        <h1 className="about-second-heading" ref={secondHeadingRef}>BUILT DIFFERENT</h1>
+        <h1 className="about-heading" ref={headingRef}>
+          THE MACHINE IS
+        </h1>
+        <h1 className="about-second-heading" ref={secondHeadingRef}>
+          BUILT DIFFERENT
+        </h1>
         <p className="about-meta" ref={metaRef}>
           [ A revolutionary approach to audio technology ]
         </p>
