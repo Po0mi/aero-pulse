@@ -4,6 +4,7 @@
   width: 100%;
   background-color: var(--bg-color);
   padding-bottom: 15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   /* ── Section header ───────────────────────────── */
   .feature-padding {
@@ -210,8 +211,112 @@
     color: rgba(244, 243, 238, 0.55);
     max-width: 50ch;
 
+    @media (min-width: 1921px) and (max-width: 2560px) {
+      max-width: 100ch;
+    }
     @media (max-width: 768px) {
       max-width: unset;
     }
+  }
+}
+
+/* ─── 📱 APPENDED MOBILE OPTIMIZATION (≤768px) ─── */
+@media (max-width: 768px) {
+  .features {
+    padding-bottom: 4rem !important;
+  }
+
+  .features .feature-padding {
+    padding: 3rem 1rem 1.5rem !important;
+  }
+
+  .features .features-timeline {
+    padding: 1rem 1rem 3rem !important;
+  }
+
+  /* Hide the vertical track line on mobile for cleaner look */
+  .features .tl-track {
+    display: none !important;
+  }
+
+  /* Stack timeline items vertically, center content */
+  .features .tl-item {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto auto auto !important;
+    padding: 2.5rem 0 !important;
+    min-height: unset !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+
+  /* Force all content to center column on mobile */
+  .features .tl-item--left .tl-content,
+  .features .tl-item--right .tl-content {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    text-align: center !important;
+    padding: 0 1rem !important;
+    align-self: center !important;
+    justify-self: center !important;
+  }
+
+  /* Center the node/dot */
+  .features .tl-node {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .features .tl-index {
+    position: relative !important;
+    bottom: auto !important;
+    display: block !important;
+    margin-bottom: 0.25rem !important;
+    text-align: center !important;
+  }
+
+  /* Hide spacers on mobile */
+  .features .tl-spacer {
+    display: none !important;
+  }
+
+  /* Scale down typography for mobile readability */
+  .features .tl-title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem) !important;
+    text-align: center !important;
+  }
+
+  .features .tl-body {
+    font-size: clamp(0.95rem, 3.5vw, 1.1rem) !important;
+    line-height: 1.7 !important;
+    text-align: center !important;
+    max-width: 65ch !important;
+    margin: 0 auto !important;
+  }
+
+  .features .tl-tag {
+    font-size: 0.7rem !important;
+    text-align: center !important;
+  }
+}
+
+/* ─── 📱 EXTRA SMALL (≤480px) ─── */
+@media (max-width: 480px) {
+  .features .tl-title {
+    font-size: clamp(1.3rem, 5.5vw, 2rem) !important;
+  }
+
+  .features .tl-body {
+    font-size: clamp(0.9rem, 3vw, 1rem) !important;
+  }
+
+  .features .tl-item {
+    padding: 2rem 0 !important;
+  }
+
+  .tl-node-ring {
+    display: none !important;
   }
 }

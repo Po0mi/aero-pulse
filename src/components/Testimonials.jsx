@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import "./Testimonials.scss";
+import useTestimonialsAnimation from "../hooks/useTestimonialsAnimation";
 
 const CARDS = [
   {
@@ -117,91 +118,21 @@ const DeconstructedCard = ({ card, cardRef, onMouseMove, onMouseLeave }) => {
 };
 
 const Testimonials = () => {
-  const trackRef = useRef(null);
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
   const cardRefs = useRef([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const cardMargin = 40;
-  const isPausedRef = useRef(false);
-  const currentIndexRef = useRef(0);
 
-  const getCardWidth = useCallback(() => {
-    const card = cardRefs.current[0];
-    return card ? card.offsetWidth : 400;
-  }, []);
+  useTestimonialsAnimation({ sectionRef, headerRef, cardRefs });
 
-  const goToCard = useCallback(
-    (index) => {
-      const wrapped = ((index % CARDS.length) + CARDS.length) % CARDS.length;
-      setCurrentIndex(wrapped);
-      currentIndexRef.current = wrapped;
-      if (trackRef.current) {
-        const totalCardWidth = getCardWidth() + cardMargin;
-        trackRef.current.style.transform = `translateX(${-wrapped * totalCardWidth}px)`;
-      }
-    },
-    [getCardWidth],
-  );
-
-  // Auto-scroll
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isPausedRef.current) goToCard(currentIndexRef.current + 1);
-    }, 3500);
-    return () => clearInterval(interval);
-  }, [goToCard]);
-
-  // Keyboard
-  useEffect(() => {
-    const handleKey = (e) => {
-      if (e.key === "ArrowLeft") goToCard(currentIndexRef.current - 1);
-      if (e.key === "ArrowRight") goToCard(currentIndexRef.current + 1);
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [goToCard]);
-
-  // Touch
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    let touchStartX = 0;
-    const onTouchStart = (e) => (touchStartX = e.changedTouches[0].screenX);
-    const onTouchEnd = (e) => {
-      const diff = touchStartX - e.changedTouches[0].screenX;
-      if (diff > 50) goToCard(currentIndexRef.current + 1);
-      else if (diff < -50) goToCard(currentIndexRef.current - 1);
-    };
-    track.addEventListener("touchstart", onTouchStart);
-    track.addEventListener("touchend", onTouchEnd);
-    return () => {
-      track.removeEventListener("touchstart", onTouchStart);
-      track.removeEventListener("touchend", onTouchEnd);
-    };
-  }, [goToCard]);
-
-  // Resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (!trackRef.current) return;
-      const totalCardWidth = getCardWidth() + cardMargin;
-      trackRef.current.style.transition = "none";
-      trackRef.current.style.transform = `translateX(${-currentIndexRef.current * totalCardWidth}px)`;
-      setTimeout(() => {
-        if (trackRef.current)
-          trackRef.current.style.transition =
-            "transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
-      }, 50);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [getCardWidth]);
-
-  // Mouse parallax
+  // Mouse parallax effect (preserved from original)
   const handleMouseMove = useCallback((e, cardEl) => {
+    if (!cardEl) return;
     const rect = cardEl.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
+
     cardEl.style.transform = `perspective(1200px) rotateX(${(y - 0.5) * 8}deg) rotateY(${(x - 0.5) * -8}deg)`;
+
     cardEl.querySelectorAll(".card-layer").forEach((layer, i) => {
       const ox = (x - 0.5) * 10 * (i + 1);
       const oy = (y - 0.5) * 10 * (i + 1);
@@ -210,89 +141,53 @@ const Testimonials = () => {
   }, []);
 
   const handleMouseLeave = useCallback((cardEl) => {
+    if (!cardEl) return;
     cardEl.style.transform = "";
     cardEl
       .querySelectorAll(".card-layer")
       .forEach((l) => (l.style.transform = ""));
   }, []);
 
+  // Cleanup transforms on unmount
+  useEffect(() => {
+    return () => {
+      cardRefs.current.forEach((card) => {
+        if (card) {
+          card.style.transform = "";
+          card
+            .querySelectorAll?.(".card-layer")
+            ?.forEach((l) => (l.style.transform = ""));
+        }
+      });
+    };
+  }, []);
+
   return (
-    <section id="testimonials" className="testimonials-section">
-      <div className="testimonials-header">
+    <section id="testimonials" className="testimonials-section" ref={sectionRef}>
+      <div className="testimonials-header" ref={headerRef}>
         <h2 className="testimonials-title">VOICES OF PRECISION</h2>
         <p className="testimonials-subtitle">
           [ Discover why professionals trust AeroPulse Pro ]
         </p>
       </div>
 
-      <div
-        className="carousel"
-        onMouseEnter={() => (isPausedRef.current = true)}
-        onMouseLeave={() => (isPausedRef.current = false)}
-      >
-        <div className="carousel-track" ref={trackRef}>
-          {CARDS.map((card, index) => (
-            <DeconstructedCard
-              key={card.id}
-              card={card}
-              cardRef={(el) => (cardRefs.current[index] = el)}
-              onMouseMove={(e) =>
-                cardRefs.current[index] &&
-                handleMouseMove(e, cardRefs.current[index])
-              }
-              onMouseLeave={() =>
-                cardRefs.current[index] &&
-                handleMouseLeave(cardRefs.current[index])
-              }
-            />
-          ))}
-        </div>
-
-        <div className="carousel-controls">
-          <button
-            className="carousel-button prev"
-            onClick={() => goToCard(currentIndexRef.current - 1)}
-            aria-label="Previous"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <button
-            className="carousel-button next"
-            onClick={() => goToCard(currentIndexRef.current + 1)}
-            aria-label="Next"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-        </div>
-
-        <div className="dots-container">
-          {CARDS.map((_, i) => (
-            <button
-              key={i}
-              className={`dot${i === currentIndex ? " active" : ""}`}
-              onClick={() => goToCard(i)}
-              aria-label={`Go to card ${i + 1}`}
-            />
-          ))}
-        </div>
+      {/* Bento Grid Layout */}
+      <div className="bento-grid">
+        {CARDS.map((card, index) => (
+          <DeconstructedCard
+            key={card.id}
+            card={card}
+            cardRef={(el) => (cardRefs.current[index] = el)}
+            onMouseMove={(e) =>
+              cardRefs.current[index] &&
+              handleMouseMove(e, cardRefs.current[index])
+            }
+            onMouseLeave={() =>
+              cardRefs.current[index] &&
+              handleMouseLeave(cardRefs.current[index])
+            }
+          />
+        ))}
       </div>
     </section>
   );

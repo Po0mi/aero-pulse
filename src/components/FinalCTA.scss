@@ -1,0 +1,341 @@
+// ─── Section ───────────────────────────────────────────────────────────────
+.final-cta {
+  position: relative;
+  width: 100%;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 10rem 2rem 10rem;
+
+  @media (max-width: 768px) {
+    padding: 6rem 1.5rem 0;
+  }
+}
+
+// ─── Inner ─────────────────────────────────────────────────────────────────
+.cta-inner {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 1100px;
+  width: 100%;
+}
+
+// ─── Eyebrow ───────────────────────────────────────────────────────────────
+.cta-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  color: rgba(244, 243, 238, 0.8);
+  opacity: 0.6;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+// ─── Headline ──────────────────────────────────────────────────────────────
+.cta-headline {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 10vw, 9rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--secondary-text);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  perspective: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 0.25em;
+}
+
+.cta-word {
+  display: inline-flex;
+}
+
+.cta-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.cta-char {
+  display: inline-block;
+  transform-origin: bottom center;
+  will-change: transform, opacity;
+}
+
+// ─── Subline ───────────────────────────────────────────────────────────────
+.cta-subline {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 1.5vw, 1.05rem);
+  color: var(--main-text);
+  opacity: 0.55;
+  line-height: 1.75;
+  margin-bottom: 3.5rem;
+  letter-spacing: 0.02em;
+}
+
+// ─── Buttons ───────────────────────────────────────────────────────────────
+.cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: 3.5rem;
+}
+
+.cta-btn {
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+
+  &--primary {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--secondary-text);
+    color: var(--bg-color);
+    border: 1px solid var(--secondary-text);
+    padding: 0.75rem 2rem;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--main-text);
+      translate: -101% 0;
+      transition: translate 0.45s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+
+    &:hover::before {
+      translate: 0 0;
+    }
+
+    .btn-text,
+    .btn-arrow {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-arrow {
+      font-size: 1rem;
+      transition: translate 0.3s ease;
+    }
+
+    &:hover .btn-arrow {
+      translate: 4px 0;
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--main-text);
+    padding: 0.75rem 1.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    &:hover {
+      background-color: #ffffff;
+      border-color: #ffffff;
+      color: var(--bg-color);
+    }
+  }
+}
+
+// ─── Social proof ──────────────────────────────────────────────────────────
+.cta-proof {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.proof-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.proof-stars {
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  color: var(--secondary-text);
+  opacity: 0.7;
+}
+
+.proof-count {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--main-text);
+  opacity: 0.4;
+  text-transform: uppercase;
+}
+
+.proof-divider {
+  width: 1px;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+.proof-badge {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  color: var(--main-text);
+  opacity: 0.35;
+  text-transform: uppercase;
+}
+
+// ─── Responsive ────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+
+    .cta-btn {
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  .proof-divider {
+    display: none;
+  }
+}
+
+/* ─── 📱 APPENDED MOBILE OPTIMIZATION (≤768px) ─── */
+@media (max-width: 768px) {
+  .final-cta {
+    padding: calc(4rem + env(safe-area-inset-top)) 1rem
+      calc(3rem + env(safe-area-inset-bottom)) !important;
+    overflow: visible !important;
+  }
+
+  .cta-inner {
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  /* Eyebrow: smaller & centered */
+  .cta-eyebrow {
+    font-size: 0.65rem !important;
+    letter-spacing: 2px !important;
+    margin-bottom: 1.5rem !important;
+    text-align: center !important;
+  }
+
+  /* Headline: scale down & ensure wrapping */
+  .cta-headline {
+    font-size: clamp(2rem, 9vw, 4rem) !important;
+    letter-spacing: 1px !important;
+    margin-bottom: 1.5rem !important;
+    gap: 0.15em 0 !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  .cta-word {
+    justify-content: center !important;
+  }
+
+  /* Subline: readable & centered */
+  .cta-subline {
+    font-size: clamp(0.9rem, 3.5vw, 1rem) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 2.5rem !important;
+    text-align: center !important;
+    padding: 0 0.5rem !important;
+  }
+
+  /* Buttons: full-width, stacked, thumb-friendly */
+  .cta-actions {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+    margin-bottom: 2.5rem !important;
+    padding: 0 0.5rem !important;
+  }
+
+  .cta-btn {
+    width: 100% !important;
+    max-width: 320px !important;
+    margin: 0 auto !important;
+    padding: 0.9rem 1.5rem !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 2px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    border-radius: 4px !important;
+  }
+
+  .cta-btn--primary {
+    gap: 10px !important;
+  }
+
+  .cta-btn--primary .btn-arrow {
+    font-size: 0.9rem !important;
+  }
+
+  /* Social proof: simplify & center */
+  .cta-proof {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding: 0 1rem !important;
+  }
+
+  .proof-rating {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .proof-stars {
+    font-size: 0.7rem !important;
+    letter-spacing: 2px !important;
+  }
+
+  .proof-count,
+  .proof-badge {
+    font-size: 0.6rem !important;
+    text-align: center !important;
+  }
+
+  .proof-divider {
+    display: none !important;
+  }
+}
+
+/* ─── 📱 EXTRA SMALL (≤480px) ─── */
+@media (max-width: 480px) {
+  .cta-headline {
+    font-size: clamp(1.8rem, 8vw, 3rem) !important;
+  }
+
+  .cta-subline {
+    font-size: clamp(0.85rem, 3vw, 0.95rem) !important;
+  }
+
+  .cta-btn {
+    padding: 0.85rem 1.25rem !important;
+    font-size: 0.68rem !important;
+  }
+
+  .proof-stars {
+    font-size: 0.65rem !important;
+  }
+}

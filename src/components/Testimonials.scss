@@ -5,13 +5,14 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 .testimonials-section {
   width: 100%;
   background-color: var(--bg-color);
-  padding: 5rem;
+  padding: 5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   @media (max-width: 768px) {
-    padding: 4rem 1.5rem;
+    padding: 3rem 1rem;
   }
 }
 
@@ -23,10 +24,11 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   gap: 1rem;
   text-align: center;
   margin-bottom: 3rem;
+  max-width: 1200px;
 
   .testimonials-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 8vw, 7rem);
+    font-size: clamp(2rem, 8vw, 10rem);
     font-weight: 700;
     color: var(--secondary-text);
     letter-spacing: 2px;
@@ -41,99 +43,83 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
-/* ── Carousel ─────────────────────────────────── */
-.carousel {
-  position: relative;
+/* ── Bento Grid ───────────────────────────────── */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(300px, auto);
+  gap: 24px;
   width: 100%;
-  max-width: 1400px;
-  overflow: hidden;
-  padding: 40px 0 20px;
-}
+  max-width: 1600px;
+  padding: 20px 0;
 
-.carousel-track {
-  display: flex;
-  gap: 40px;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 20px 0 40px;
-}
-
-/* ── Controls ─────────────────────────────────── */
-.carousel-controls {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 24px;
-}
-
-.carousel-button {
-  background: var(--secondary-text);
-  color: var(--bg-color);
-  border: none;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-
-  svg {
-    width: 20px;
-    height: 20px;
+  /* Classic bento asymmetry: vary spans for visual interest */
+  > *:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  > *:nth-child(2) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  > *:nth-child(3) {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  > *:nth-child(4) {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  > *:nth-child(5) {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  > *:nth-child(6) {
+    grid-column: span 1;
+    grid-row: span 2;
   }
 
-  &:hover {
-    transform: translateY(-2px);
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    > *:nth-child(1) {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
+    > *:nth-child(4) {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
   }
-  &:active {
-    transform: translateY(0);
-  }
-}
 
-/* ── Dots ─────────────────────────────────────── */
-.dots-container {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  background-color: var(--secondary-text);
-  border: none;
-  border-radius: 50%;
-  opacity: 0.25;
-  cursor: pointer;
-  padding: 0;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
-
-  &.active {
-    opacity: 1;
-    transform: scale(1.3);
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    > * {
+      grid-column: span 1 !important;
+      grid-row: span 1 !important;
+    }
   }
 }
 
 /* ── Card ─────────────────────────────────────── */
 .deconstructed-card {
   position: relative;
-  width: 400px;
-  height: 500px;
-  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
   cursor: pointer;
   transform-style: preserve-3d;
   transition: transform $ease-slow;
-  border-radius: 3px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
-  @media (max-width: 768px) {
-    width: 300px;
-    height: 400px;
+  /* Ensure card scales nicely within grid cell */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 3px;
+    pointer-events: none;
   }
 }
 
@@ -144,6 +130,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transition:
     transform $ease-slow,
     opacity $ease-slow;
+  will-change: transform;
 }
 
 .card-bg {
@@ -167,6 +154,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   svg {
     width: 100%;
     height: 100%;
+    display: block;
   }
 }
 
@@ -186,14 +174,15 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 /* ── Content ──────────────────────────────────── */
 .card-content {
   z-index: 2;
-  padding: 32px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  position: relative;
 
   @media (max-width: 768px) {
-    padding: 24px;
+    padding: 20px;
   }
 }
 
@@ -202,6 +191,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-shrink: 0;
 
   &.align-right {
     flex-direction: row-reverse;
@@ -219,6 +209,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transform: scaleX(0.5);
   transform-origin: left;
   transition: transform $ease-fast;
+  flex-shrink: 0;
 }
 
 .meta-text {
@@ -227,20 +218,22 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   letter-spacing: 0.1em;
   opacity: 0.45;
   transition: opacity $ease-fast;
+  white-space: nowrap;
 }
 
 /* ── Quote ────────────────────────────────────── */
 .fragment-body {
-  flex: 1;
   display: flex;
   align-items: center;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
+  min-height: 0;
+  flex: 1;
 }
 
 .body-quote {
   font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: 1.7;
+  font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+  line-height: 1.65;
   font-style: italic;
   font-weight: 400;
   opacity: 0.55;
@@ -249,13 +242,16 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity $ease-fast,
     transform $ease-fast;
   transition-delay: 0.06s;
+  margin: 0;
 }
 
 /* ── Author ───────────────────────────────────── */
 .fragment-author {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  flex-shrink: 0;
+  padding-top: 8px;
 
   &.align-right {
     align-items: flex-end;
@@ -271,11 +267,12 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transition:
     opacity $ease-fast,
     transform $ease-fast;
+  line-height: 1;
 }
 
 .author-name {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: clamp(0.95rem, 2.8vw, 1.05rem);
   font-weight: 700;
   letter-spacing: 0.04em;
   margin: 0;
@@ -284,6 +281,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   transition:
     transform $ease-fast,
     opacity $ease-fast;
+  line-height: 1.2;
 }
 
 .author-role {
@@ -297,6 +295,7 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     transform $ease-fast,
     opacity $ease-fast;
   transition-delay: 0.05s;
+  line-height: 1.3;
 }
 
 /* ── Dark card colours ────────────────────────── */
@@ -354,4 +353,16 @@ $ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0.6;
     transform: translateY(0);
   }
+}
+
+/* ── Grid Item Specific Adjustments ───────────── */
+/* Larger cards get slightly adjusted typography for balance */
+.bento-grid > *:nth-child(1) .body-quote {
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+}
+.bento-grid > *:nth-child(1) .author-name {
+  font-size: clamp(1.1rem, 3.2vw, 1.25rem);
+}
+.bento-grid > *:nth-child(4) .body-quote {
+  font-size: clamp(0.9rem, 2.8vw, 1rem);
 }

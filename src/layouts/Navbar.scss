@@ -12,20 +12,32 @@
     box-shadow 0.3s ease;
   padding: 20px 0;
 
-  /* State: Scrolled */
+  /* State: Scrolled — shrink padding on the nav itself */
   &.scrolled {
-    background-color: #0a0908;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-    padding: 15px 0;
+    padding: 10px 0;
   }
 
   .navbar-inner {
-    max-width: 100%;
+    max-width: 1200px;
+    width: 100%;
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition:
+      background-color 0.6s ease,
+      border-color 0.6s ease,
+      box-shadow 0.6s ease;
+  }
+
+  &.scrolled .navbar-inner {
+    background-color: rgba(10, 9, 8, 0.55);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 32px rgba(0, 0, 0, 0.35);
+    padding: 1rem 1rem;
   }
 
   /* Logo */
@@ -153,17 +165,17 @@
   right: 0;
   width: 100%;
   height: 100vh;
-  background-color: #0a0908;
+  background-color: var(--bg-color);
   z-index: 999;
-  padding-top: 100px;
-  padding-left: 24px;
-  padding-right: 24px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
 
   transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
   visibility: hidden;
 
   &.open {
@@ -171,35 +183,103 @@
     visibility: visible;
   }
 
+  .navbar-mobile-eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+    color: var(--main-text);
+    opacity: 0.35;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
   .navbar-mobile-links {
     list-style: none;
     padding: 0;
     margin: 0;
     width: 100%;
-    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 0;
   }
 
-  .navbar-mobile-link a {
-    text-decoration: none;
-    color: var(--secondary-text);
-    font-family: var(--font-body);
-    font-size: 24px;
-    font-weight: 600;
+  .navbar-mobile-link {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 
-    &.active {
-      color: var(--main-text);
+    &:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: var(--secondary-text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 200;
+      letter-spacing: 0.08em;
+      padding: 1.1rem 0;
+      opacity: 0.55;
+      transition:
+        opacity 0.25s ease,
+        letter-spacing 0.25s ease;
+
+      &::after {
+        content: "→";
+        font-size: 0.8rem;
+        opacity: 0;
+        translate: -6px 0;
+        transition:
+          opacity 0.25s ease,
+          translate 0.25s ease;
+      }
+
+      &:hover,
+      &.active {
+        opacity: 1;
+        letter-spacing: 0.12em;
+
+        &::after {
+          opacity: 1;
+          translate: 0 0;
+        }
+      }
+
+      &.active {
+        color: var(--secondary-text);
+      }
     }
   }
 
   .navbar-mobile-footer {
-    margin-top: auto;
-    margin-bottom: 40px;
+    margin-top: 2.5rem;
     color: var(--secondary-text);
     font-family: var(--font-body);
-    font-size: 14px;
-    opacity: 0.4;
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    opacity: 0.25;
+    text-transform: uppercase;
+  }
+}
+
+/* ─── 📱 APPENDED: MOBILE SCROLLED PADDING FIX (≤768px) ─── */
+@media (max-width: 768px) {
+  /* Remove top padding when navbar is scrolled on mobile */
+  .navbar.scrolled {
+    padding-top: 0 !important;
+    padding-bottom: 8px !important; /* Keep minimal bottom padding for touch targets */
+  }
+
+  /* Ensure navbar-inner also has no extra top padding when scrolled */
+  .navbar.scrolled .navbar-inner {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  /* Optional: tighten mobile menu overlay padding when open */
+  .navbar-mobile.open {
+    padding-top: env(safe-area-inset-top) !important;
   }
 }

@@ -6,6 +6,7 @@
   position: relative;
   overflow: hidden;
   background-color: var(--bg-color);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 
   .about-container {
     height: 100svh;
@@ -21,18 +22,24 @@
 
   .about-heading {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 15vw, 10rem);
+    font-size: clamp(2.4rem, 15vw, 9rem);
     grid-area: 1/1/5/5;
     font-weight: 700;
     line-height: 1.05;
     color: rgba(244, 243, 238, 0.8);
     letter-spacing: -0.02em;
     padding-left: 3rem;
+    align-self: start;
+    padding-top: 3rem;
+
+    @media (min-width: 1921px) and (max-width: 2560px) {
+      font-size: clamp(2.4rem, 15vw, 13rem);
+    }
   }
 
   .about-second-heading {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 15vw, 10rem);
+    font-size: clamp(2.4rem, 15vw, 9rem);
     grid-area: 8/4/9/8;
     font-weight: 700;
     line-height: 1.05;
@@ -41,6 +48,10 @@
     padding-left: 3rem;
     text-align: right;
     padding-right: 4rem;
+
+    @media (min-width: 1921px) and (max-width: 2560px) {
+      font-size: clamp(2.4rem, 15vw, 13rem);
+    }
   }
 
   .about-image-wrapper {
@@ -65,9 +76,14 @@
     font-weight: 200;
     line-height: 1.8;
     color: rgba(244, 243, 238, 0.8);
-    max-width: 60ch;
-    grid-area: 8/1/9/4;
+    max-width: 70ch;
+    grid-area: 8/1/8/3;
     text-align: left;
+    padding-left: 3rem;
+
+    @media (min-width: 1921px) and (max-width: 2560px) {
+      grid-area: 8/1/8/3;
+    }
   }
 
   .about-meta {
@@ -234,5 +250,93 @@
     .price-value {
       font-size: clamp(1.2rem, 3vw, 1.5rem);
     }
+  }
+}
+
+/* ─── 📱 APPENDED MOBILE OPTIMIZATION (≤768px) ─── */
+@media (max-width: 768px) {
+  .about .about-container {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    height: auto !important;
+    min-height: 100svh !important;
+    padding: calc(1.5rem + env(safe-area-inset-top)) 1rem
+      calc(1.5rem + env(safe-area-inset-bottom)) !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+
+  /* Hide secondary elements to reduce clutter on mobile */
+  .about .about-meta,
+  .about .price-tag {
+    display: none !important;
+  }
+
+  /* Center & scale headings */
+  .about .about-heading,
+  .about .about-second-heading {
+    grid-area: unset !important;
+    width: 100% !important;
+    font-size: clamp(1.8rem, 8vw, 3rem) !important;
+    padding: 0 !important;
+    text-align: center !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+  }
+
+  .about .about-second-heading {
+    margin-top: -0.5rem !important;
+  }
+
+  /* 🎧 CENTER THE IMAGE on mobile */
+  .about .about-image-wrapper {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    width: 100% !important;
+    margin: 0.5rem 0 1.5rem !important;
+    z-index: 6 !important;
+    pointer-events: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .about .about-image {
+    width: clamp(200px, 70vw, 400px) !important;
+    max-width: 400px !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Center & readable body text */
+  .about .about-body {
+    grid-area: unset !important;
+    width: 100% !important;
+    font-size: clamp(0.95rem, 3.5vw, 1.05rem) !important;
+    padding: 0 !important;
+    text-align: center !important;
+    max-width: 65ch !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+}
+
+/* ─── 📱 EXTRA SMALL (≤480px) ─── */
+@media (max-width: 480px) {
+  .about .about-heading,
+  .about .about-second-heading {
+    font-size: clamp(1.5rem, 7vw, 2.5rem) !important;
+  }
+
+  .about .about-body {
+    font-size: clamp(0.9rem, 3vw, 1rem) !important;
+  }
+
+  .about .about-image {
+    width: clamp(180px, 65vw, 320px) !important;
   }
 }

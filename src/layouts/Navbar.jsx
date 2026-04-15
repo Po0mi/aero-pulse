@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
 import "./Navbar.scss";
+import useNavbarAnimation from "../hooks/useNavbarAnimation";
 
 /**
  * Configuration for main navigation links.
@@ -9,7 +11,8 @@ const NAV_LINKS = [
   { label: "Hero", id: "hero" },
   { label: "About", id: "about" },
   { label: "Features", id: "features" },
-  { label: "Support", id: "support" },
+  { label: "Products", id: "products" },
+  { label: "Testimonials", id: "testimonials" },
 ];
 
 /**
@@ -22,22 +25,29 @@ const NAV_LINKS = [
  * 4. A mobile-friendly hamburger menu with slide-out animation.
  */
 const Navbar = () => {
-  // State Management
-  const [isOpen, setIsOpen] = useState(false); // Controls mobile menu visibility
-  const [scrolled, setScrolled] = useState(false); // Controls navbar background style
-  const [activeSection, setActiveSection] = useState("home"); // Tracks currently visible section
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const innerRef = useRef(null);
+  const logoRef = useRef(null);
+  const linksRef = useRef(null);
 
-  /**
-   * Effect: Handle Scroll Style
-   * Adds a 'scrolled' class to the navbar when the user scrolls down more than 60px.
-   * This is typically used to change the background from transparent to solid white.
-   */
+  useNavbarAnimation({ innerRef, logoRef, linksRef });
+
+  // GSAP width shrink on scroll
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
+      const isScrolled = window.scrollY > 60;
+      setScrolled(isScrolled);
+
+      gsap.to(innerRef.current, {
+        maxWidth: isScrolled ? "780px" : "1200px",
+        duration: 0.6,
+        ease: "power3.out",
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -86,23 +96,18 @@ const Navbar = () => {
    * @param {string} id - The ID of the target section.
    */
   const handleNavClick = (e, id) => {
-    e.preventDefault(); // Prevent default anchor jump behavior
+    e.preventDefault();
 
     const element = document.getElementById(id);
-    if (element) {
-      // Calculate position accounting for fixed header height
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition =
-        elementPosition + window.pageYOffset - headerOffset;
+    if (!element) return;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
-      closeMenu(); // Close mobile menu if open
+    if (window.lenis) {
+      window.lenis.scrollTo(element, { offset: -80, duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    } else {
+      element.scrollIntoView({ behavior: "smooth" });
     }
+
+    closeMenu();
   };
 
   return (
@@ -111,18 +116,19 @@ const Navbar = () => {
       <nav
         className={`navbar${scrolled ? " scrolled" : ""}${isOpen ? " menu-open" : ""}`}
       >
-        <div className="navbar-inner">
+        <div className="navbar-inner" ref={innerRef}>
           {/* Logo: Clicking scrolls to 'home' */}
           <a
             href="#home"
             className="navbar-logo"
+            ref={logoRef}
             onClick={(e) => handleNavClick(e, "home")}
           >
             <span className="navbar-logo-text">Aeropulse</span>
           </a>
 
           {/* Desktop Navigation Links */}
-          <ul className="navbar-links">
+          <ul className="navbar-links" ref={linksRef}>
             {NAV_LINKS.map(({ label, id }) => (
               <li key={id} className="navbar-link">
                 <a
@@ -155,6 +161,7 @@ const Navbar = () => {
         className={`navbar-mobile${isOpen ? " open" : ""}`}
         aria-hidden={!isOpen}
       >
+        <p className="navbar-mobile-eyebrow">[ Navigation ]</p>
         <ul className="navbar-mobile-links">
           {NAV_LINKS.map(({ label, id }) => (
             <li key={id} className="navbar-mobile-link">
