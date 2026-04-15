@@ -1,0 +1,357 @@
+$ease-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+$ease-fast: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+/* ── Section ──────────────────────────────────── */
+.testimonials-section {
+  width: 100%;
+  background-color: var(--bg-color);
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+  }
+}
+
+/* ── Header ───────────────────────────────────── */
+.testimonials-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  margin-bottom: 3rem;
+
+  .testimonials-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 8vw, 7rem);
+    font-weight: 700;
+    color: var(--secondary-text);
+    letter-spacing: 2px;
+  }
+
+  .testimonials-subtitle {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--main-text);
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+}
+
+/* ── Carousel ─────────────────────────────────── */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  overflow: hidden;
+  padding: 40px 0 20px;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 40px;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 20px 0 40px;
+}
+
+/* ── Controls ─────────────────────────────────── */
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.carousel-button {
+  background: var(--secondary-text);
+  color: var(--bg-color);
+  border: none;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* ── Dots ─────────────────────────────────────── */
+.dots-container {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background-color: var(--secondary-text);
+  border: none;
+  border-radius: 50%;
+  opacity: 0.25;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+/* ── Card ─────────────────────────────────────── */
+.deconstructed-card {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform $ease-slow;
+  border-radius: 3px;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 400px;
+  }
+}
+
+/* ── Layers ───────────────────────────────────── */
+.card-layer {
+  position: absolute;
+  inset: 0;
+  transition:
+    transform $ease-slow,
+    opacity $ease-slow;
+}
+
+.card-bg {
+  z-index: 0;
+}
+
+.deconstructed-card--dark .card-bg {
+  background-color: #161614;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.deconstructed-card--light .card-bg {
+  background-color: #f0ede8;
+}
+
+/* ── Frame ────────────────────────────────────── */
+.card-frame {
+  z-index: 3;
+  pointer-events: none;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.frame-path {
+  fill: none;
+  stroke: rgba(150, 150, 150, 0.3);
+  stroke-width: 1;
+  stroke-dasharray: 1520;
+  stroke-dashoffset: 1520;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.deconstructed-card:hover .frame-path {
+  stroke-dashoffset: 0;
+}
+
+/* ── Content ──────────────────────────────────── */
+.card-content {
+  z-index: 2;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
+}
+
+/* ── Meta ─────────────────────────────────────── */
+.fragment-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  &.align-right {
+    flex-direction: row-reverse;
+    align-self: flex-end;
+
+    .meta-line {
+      transform-origin: right;
+    }
+  }
+}
+
+.meta-line {
+  width: 32px;
+  height: 1px;
+  transform: scaleX(0.5);
+  transform-origin: left;
+  transition: transform $ease-fast;
+}
+
+.meta-text {
+  font-family: "Space Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+  transition: opacity $ease-fast;
+}
+
+/* ── Quote ────────────────────────────────────── */
+.fragment-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 0;
+}
+
+.body-quote {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-style: italic;
+  font-weight: 400;
+  opacity: 0.55;
+  transform: translateY(8px);
+  transition:
+    opacity $ease-fast,
+    transform $ease-fast;
+  transition-delay: 0.06s;
+}
+
+/* ── Author ───────────────────────────────────── */
+.fragment-author {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &.align-right {
+    align-items: flex-end;
+    text-align: right;
+  }
+}
+
+.stars {
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  opacity: 0.35;
+  transform: translateY(4px);
+  transition:
+    opacity $ease-fast,
+    transform $ease-fast;
+}
+
+.author-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0;
+  opacity: 0.85;
+  transform: translateY(4px);
+  transition:
+    transform $ease-fast,
+    opacity $ease-fast;
+}
+
+.author-role {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  margin: 0;
+  opacity: 0.35;
+  transform: translateY(4px);
+  transition:
+    transform $ease-fast,
+    opacity $ease-fast;
+  transition-delay: 0.05s;
+}
+
+/* ── Dark card colours ────────────────────────── */
+.deconstructed-card--dark {
+  .meta-line {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  .meta-text,
+  .body-quote,
+  .stars,
+  .author-name,
+  .author-role {
+    color: #e8e6e1;
+  }
+}
+
+/* ── Light card colours ───────────────────────── */
+.deconstructed-card--light {
+  .meta-line {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+
+  .meta-text,
+  .body-quote,
+  .stars,
+  .author-name,
+  .author-role {
+    color: #1a1917;
+  }
+}
+
+/* ── Hover reveals ────────────────────────────── */
+.deconstructed-card:hover {
+  .meta-line {
+    transform: scaleX(1);
+  }
+  .meta-text {
+    opacity: 0.75;
+  }
+
+  .body-quote {
+    opacity: 0.85;
+    transform: translateY(0);
+  }
+  .stars {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .author-name {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .author-role {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+}
