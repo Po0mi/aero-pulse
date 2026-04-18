@@ -10,6 +10,7 @@ const Hero = () => {
   const bodyRef = useRef(null);
   const imageRef = useRef(null);
   const bottomMetaRef = useRef(null);
+  const ctaRef = useRef(null);
 
   useHeroAnimation({
     metaRef,
@@ -18,6 +19,7 @@ const Hero = () => {
     bodyRef,
     imageRef,
     bottomMetaRef,
+    ctaRef,
   });
 
   return (
@@ -55,6 +57,10 @@ const Hero = () => {
           high-performance aerospace instrument engineered for absolute acoustic
           fidelity.
         </p>
+
+        <a href="#products" className="hero-cta" ref={ctaRef}>
+          Shop Now
+        </a>
 
         <div className="hero-image-wrapper" ref={imageRef}>
           <img

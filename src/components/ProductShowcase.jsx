@@ -116,6 +116,20 @@ const ProductShowcase = () => {
             src={product.image}
             alt={product.name}
           />
+          <button
+            className="carousel__nav-btn carousel__nav-btn--prev"
+            onClick={prev}
+            aria-label="Previous product"
+          >
+            ←
+          </button>
+          <button
+            className="carousel__nav-btn carousel__nav-btn--next"
+            onClick={next}
+            aria-label="Next product"
+          >
+            →
+          </button>
           <span className="carousel__counter">
             {String(active + 1).padStart(2, "0")} /{" "}
             {String(PRODUCTS.length).padStart(2, "0")}
@@ -142,31 +156,15 @@ const ProductShowcase = () => {
             <span className="carousel__price">{product.price}</span>
             <button className="carousel__cta">EXPLORE</button>
 
-            <div className="carousel__nav">
-              <button
-                className="carousel__nav-btn"
-                onClick={prev}
-                aria-label="Previous product"
-              >
-                ←
-              </button>
-              <div className="carousel__dots">
-                {PRODUCTS.map((_, i) => (
-                  <button
-                    key={i}
-                    className={`carousel__dot${i === active ? " active" : ""}`}
-                    onClick={() => goTo(i)}
-                    aria-label={`Go to product ${i + 1}`}
-                  />
-                ))}
-              </div>
-              <button
-                className="carousel__nav-btn"
-                onClick={next}
-                aria-label="Next product"
-              >
-                →
-              </button>
+            <div className="carousel__dots">
+              {PRODUCTS.map((_, i) => (
+                <button
+                  key={i}
+                  className={`carousel__dot${i === active ? " active" : ""}`}
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to product ${i + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>

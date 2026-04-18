@@ -279,23 +279,31 @@
 }
 
 .carousel__nav-btn {
-  width: 36px;
-  height: 36px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--main-text);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
   transition:
     border-color 0.25s ease,
-    color 0.25s ease;
+    background-color 0.25s ease;
+
+  &--prev { left: 1.25rem; }
+  &--next { right: 1.25rem; }
 
   &:hover {
     border-color: #ffffff;
-    color: #ffffff;
+    background: rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -417,20 +425,6 @@
     text-align: center !important;
   }
 
-  /* Navigation: larger tap targets */
-  .carousel__nav {
-    gap: 1.5rem !important;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .carousel__nav-btn {
-    width: 44px !important;
-    height: 44px !important;
-    font-size: 1.1rem !important;
-    border-radius: 50% !important;
-  }
-
   .carousel__dots {
     gap: 0.75rem !important;
   }
@@ -440,14 +434,7 @@
     height: 8px !important;
   }
 
-  /* CTA: full-width for mobile UX */
-  .carousel__cta {
-    width: 100% !important;
-    padding: 0.85rem 1rem !important;
-    font-size: 0.7rem !important;
-    text-align: center !important;
-    justify-content: center !important;
-  }
+  /* CTA stays centered on the image — no override needed */
 }
 
 /* ─── 📱 EXTRA SMALL (≤480px) ─── */

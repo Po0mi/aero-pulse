@@ -56,11 +56,15 @@
 
   .about-image-wrapper {
     position: absolute;
-    top: 5rem;
+    top: -5%;
     left: 50%;
     transform: translateX(-50%) translateY(-10%); /* This centers it horizontally */
     z-index: 5;
     pointer-events: none;
+
+    @media (min-width: 1921px) and (max-width: 2560px) {
+      top: 5%;
+    }
   }
 
   .about-image {

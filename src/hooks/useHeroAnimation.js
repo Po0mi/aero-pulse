@@ -9,7 +9,7 @@ import gsap from "gsap";
  *
  * Order: meta → title → subtitle → body → image → bottomMeta
  */
-const useHeroAnimation = ({ metaRef, titleRef, subtitleRef, bodyRef, imageRef, bottomMetaRef }) => {
+const useHeroAnimation = ({ metaRef, titleRef, subtitleRef, bodyRef, imageRef, bottomMetaRef, ctaRef }) => {
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -80,7 +80,23 @@ const useHeroAnimation = ({ metaRef, titleRef, subtitleRef, bodyRef, imageRef, b
       "-=0.9"
     );
 
-    // 6. Bottom meta — expand from right to left, then text reveals
+    // 6. CTA — clip open left → right then subtle lift
+    if (ctaRef?.current) {
+      tl.fromTo(
+        ctaRef.current,
+        { clipPath: "inset(0 100% 0 0)", opacity: 1 },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.7, ease: "expo.out" },
+        "-=0.6"
+      );
+      tl.fromTo(
+        ctaRef.current,
+        { y: 8 },
+        { y: 0, duration: 0.5, ease: "power3.out" },
+        "-=0.5"
+      );
+    }
+
+    // 7. Bottom meta — expand from right to left, then text reveals
     const bottomLabel = bottomMetaRef.current.querySelector(".bottom-label");
 
     tl.fromTo(
@@ -98,7 +114,7 @@ const useHeroAnimation = ({ metaRef, titleRef, subtitleRef, bodyRef, imageRef, b
     );
 
     return () => tl.kill();
-  }, [metaRef, titleRef, subtitleRef, bodyRef, imageRef, bottomMetaRef]);
+  }, [metaRef, titleRef, subtitleRef, bodyRef, imageRef, bottomMetaRef, ctaRef]);
 };
 
 export default useHeroAnimation;
